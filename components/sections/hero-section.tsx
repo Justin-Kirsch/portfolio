@@ -93,7 +93,7 @@ export function HeroSection() {
                                 size="lg"
                                 variant="outline"
                                 onClick={() => scrollToSection('projects')}
-                                className="group btn-glass hover:scale-105 hover:-translate-y-0.5 transition-all"
+                                className="group btn-glass hover:scale-105 hover:-translate-y-0.5 transition-all hover:text-foreground"
                             >
                                 Projekte ansehen
                                 <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
