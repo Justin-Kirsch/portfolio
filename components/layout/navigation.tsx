@@ -112,6 +112,9 @@ export function Navigation() {
                 setActiveSection(targetId);
             }
         }
+
+        // Remove hash from URL to keep it clean
+        window.history.replaceState(null, '', window.location.pathname);
     };
 
     return (
