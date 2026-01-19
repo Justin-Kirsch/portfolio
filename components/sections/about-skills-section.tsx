@@ -41,7 +41,7 @@ export function AboutSkillsSection() {
                             </h2>
                             <div className="space-y-4 text-muted-foreground leading-relaxed">
                                 <p>
-                                    Mein Name ist <span className="text-foreground font-semibold">Justin Michael Kirsch</span>, ich bin 30 Jahre alt und verbringe meine Freizeit gerne mit meiner Familie und natürlich mit der Programmierung. Schon als Kind haben mich Computer und die Prozesse fasziniert, die hinter jedem einzelnen Mausklick stecken. Diese Neugier hat mich mein Leben lang begleitet und schließlich zu meiner heutigen Leidenschaft geführt.
+                                    Mein Name ist <span className="text-foreground font-semibold">Justin Michael Kirsch</span>, ich bin 30 Jahre alt und verbringe meine Freizeit gerne mit meiner Familie, Gaming und mit der Programmierung. Schon als Kind haben mich Computer und die Prozesse fasziniert, die hinter jedem einzelnen Mausklick stecken. Diese Neugier hat mich mein Leben lang begleitet und schließlich zu meiner heutigen Leidenschaft geführt.
                                 </p>
                                 <p>
                                     Meine erste Zeile Code habe ich im <span className="text-foreground font-medium">Oktober 2022</span> geschrieben. Nur wenige Monate später, im März 2023, begann ich eine Weiterbildung zum Front-End-Entwickler. Durch diese intensive Lernphase konnte ich mir nicht nur technisches Wissen, sondern auch eine klare Struktur und ein tiefes Verständnis für moderne Webentwicklung aneignen.
