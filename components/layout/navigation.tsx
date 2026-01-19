@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 import { useTheme } from 'next-themes';
 import { Moon, Sun, Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -17,11 +18,15 @@ const navItems = [
 ];
 
 export function Navigation() {
+    const pathname = usePathname();
     const [mounted, setMounted] = React.useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
     const [activeSection, setActiveSection] = React.useState('hero');
     const [indicatorStyle, setIndicatorStyle] = React.useState({ left: 0, width: 0 });
     const { theme, setTheme } = useTheme();
+
+    // Check if we're on a legal page (impressum or datenschutz)
+    const isLegalPage = pathname === '/impressum' || pathname === '/datenschutz';
 
     React.useEffect(() => {
         setMounted(true);
@@ -127,36 +132,38 @@ export function Navigation() {
 
                 {/* Desktop Navigation */}
                 <div className="hidden items-center gap-6 md:flex">
-                    <div className="relative flex items-center gap-6">
-                        {navItems.map((item, index) => {
-                            const isActive = activeSection === item.href.substring(1);
-                            return (
-                                <a
-                                    key={item.href}
-                                    href={item.href}
-                                    onClick={(e) => handleNavClick(e, item.href)}
-                                    className={cn(
-                                        "relative text-sm font-medium transition-colors hover:text-foreground py-1",
-                                        isActive
-                                            ? "text-primary"
-                                            : "text-muted-foreground"
-                                    )}
-                                    data-nav-item={item.href.substring(1)}
-                                >
-                                    {item.label}
-                                </a>
-                            );
-                        })}
+                    {!isLegalPage && (
+                        <div className="relative flex items-center gap-6">
+                            {navItems.map((item, index) => {
+                                const isActive = activeSection === item.href.substring(1);
+                                return (
+                                    <a
+                                        key={item.href}
+                                        href={item.href}
+                                        onClick={(e) => handleNavClick(e, item.href)}
+                                        className={cn(
+                                            "relative text-sm font-medium transition-colors hover:text-foreground py-1",
+                                            isActive
+                                                ? "text-primary"
+                                                : "text-muted-foreground"
+                                        )}
+                                        data-nav-item={item.href.substring(1)}
+                                    >
+                                        {item.label}
+                                    </a>
+                                );
+                            })}
 
-                        {/* Animated sliding indicator */}
-                        <span
-                            className="absolute -bottom-[21px] h-0.5 bg-primary transition-all duration-300 ease-out"
-                            style={{
-                                left: `${indicatorStyle.left}px`,
-                                width: `${indicatorStyle.width}px`,
-                            }}
-                        />
-                    </div>
+                            {/* Animated sliding indicator */}
+                            <span
+                                className="absolute -bottom-[21px] h-0.5 bg-primary transition-all duration-300 ease-out"
+                                style={{
+                                    left: `${indicatorStyle.left}px`,
+                                    width: `${indicatorStyle.width}px`,
+                                }}
+                            />
+                        </div>
+                    )}
 
                     {/* Theme Toggle */}
                     {mounted && (
@@ -216,49 +223,53 @@ export function Navigation() {
                         </motion.button>
                     )}
 
-                    <Button
-                        variant="ghost"
-                        size="icon"
-                        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                        aria-label="Toggle menu"
-                    >
-                        {mobileMenuOpen ? (
-                            <X className="h-5 w-5" />
-                        ) : (
-                            <Menu className="h-5 w-5" />
-                        )}
-                    </Button>
+                    {!isLegalPage && (
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                            aria-label="Toggle menu"
+                        >
+                            {mobileMenuOpen ? (
+                                <X className="h-5 w-5" />
+                            ) : (
+                                <Menu className="h-5 w-5" />
+                            )}
+                        </Button>
+                    )}
                 </div>
             </div>
 
             {/* Mobile Menu */}
-            <div
-                className={cn(
-                    'md:hidden',
-                    mobileMenuOpen ? 'block' : 'hidden'
-                )}
-            >
-                <div className="space-y-1 border-t border-border/40 bg-background px-4 pb-4 pt-2">
-                    {navItems.map((item) => {
-                        const isActive = activeSection === item.href.substring(1);
-                        return (
-                            <a
-                                key={item.href}
-                                href={item.href}
-                                onClick={(e) => handleNavClick(e, item.href)}
-                                className={cn(
-                                    "block rounded-md px-3 py-2 text-base font-medium transition-colors hover:bg-muted hover:text-foreground",
-                                    isActive
-                                        ? "bg-primary/10 text-primary border-l-2 border-primary"
-                                        : "text-muted-foreground"
-                                )}
-                            >
-                                {item.label}
-                            </a>
-                        );
-                    })}
+            {!isLegalPage && (
+                <div
+                    className={cn(
+                        'md:hidden',
+                        mobileMenuOpen ? 'block' : 'hidden'
+                    )}
+                >
+                    <div className="space-y-1 border-t border-border/40 bg-background px-4 pb-4 pt-2">
+                        {navItems.map((item) => {
+                            const isActive = activeSection === item.href.substring(1);
+                            return (
+                                <a
+                                    key={item.href}
+                                    href={item.href}
+                                    onClick={(e) => handleNavClick(e, item.href)}
+                                    className={cn(
+                                        "block rounded-md px-3 py-2 text-base font-medium transition-colors hover:bg-muted hover:text-foreground",
+                                        isActive
+                                            ? "bg-primary/10 text-primary border-l-2 border-primary"
+                                            : "text-muted-foreground"
+                                    )}
+                                >
+                                    {item.label}
+                                </a>
+                            );
+                        })}
+                    </div>
                 </div>
-            </div>
+            )}
         </nav>
     );
 }
